@@ -25,16 +25,38 @@ const generationConfig = {
   responseMimeType: "text/plain",
 };
 
-async function run() {
+const safetySettings = [
+  {
+    category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+    threshold: HarmBlockThreshold.BLOCK_NONE,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+    threshold: HarmBlockThreshold.BLOCK_NONE,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+    threshold: HarmBlockThreshold.BLOCK_NONE,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+    threshold: HarmBlockThreshold.BLOCK_NONE,
+  },
+];
+
+async function run(input) {
+  // Accept prompt or input as an argument
   const chatSession = model.startChat({
     generationConfig,
-    // safetySettings: Adjust safety settings
-    // See https://ai.google.dev/gemini-api/docs/safety-settings
+    safetySettings,
     history: [],
   });
 
-  const result = await chatSession.sendMessage("INSERT_INPUT_HERE");
-  console.log(result.response.text());
+  const result = await chatSession.sendMessage(input); // Use input instead of undefined prompt
+  const response = result.response;
+  console.log(response.text());
+
+  return result.response.text;
 }
 
 export default run;

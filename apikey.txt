@@ -1,0 +1,189 @@
+AIzaSyCLnOqd1IYt2l3HJYPnmLXwDT6jyKdo9ek
+
+/*
+ * Install the Generative AI SDK
+ *
+ * $ npm install @google/generative-ai
+ */
+
+import {
+  GoogleGenerativeAI,
+  HarmCategory,
+  HarmBlockThreshold,
+} from "@google/generative-ai";
+
+const apiKey = import.meta.env.GEMINI_API_KEY;
+const genAI = new GoogleGenerativeAI("");
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-1.5-flash",
+});
+
+const generationConfig = {
+  temperature: 1,
+  topP: 0.95,
+  topK: 64,
+  maxOutputTokens: 8192,
+  responseMimeType: "text/plain",
+};
+
+async function run() {
+  const chatSession = model.startChat({
+    generationConfig,
+    // safetySettings: Adjust safety settings
+    // See https://ai.google.dev/gemini-api/docs/safety-settings
+    history: [],
+  });
+
+  const result = await chatSession.sendMessage("INSERT_INPUT_HERE");
+  console.log(result.response.text());
+}
+
+export default run;
+
+
+
+
+
+
+
+import { useState } from "react";
+import { createContext } from "react";
+import run from "../config/gemini";
+
+export const Context = createContext();
+
+const ContextProvider = (props) => {
+  const [input, setInput] = useState("");
+  const [recentPrompt, setRecentPrompt] = useState("");
+  const [previousPrompts, setPreviousPrompts] = useState([]);
+  const [showResult, setShowResult] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [resultData, setResultData] = useState("");
+
+  const onSent = async (prompt) => {
+    await run(input);
+  };
+
+  const contextValue = {
+    previousPrompts,
+    setPreviousPrompts,
+    onSent,
+    setRecentPrompt,
+    recentPrompt,
+    showResult,
+    loading,
+    resultData,
+    input,
+    setInput,
+  };
+
+  return (
+    <Context.Provider value={contextValue}>{props.children}</Context.Provider>
+  );
+};
+
+export default ContextProvider;
+
+
+
+import { useState } from "react";
+import { createContext } from "react";
+import run from "../config/gemini";
+
+export const Context = createContext();
+
+const ContextProvider = (props) => {
+  const [input, setInput] = useState("");
+  const [recentPrompt, setRecentPrompt] = useState("");
+  const [previousPrompts, setPreviousPrompts] = useState([]);
+  const [showResult, setShowResult] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [resultData, setResultData] = useState("");
+
+  const onSent = async (prompt) => {
+    await run(input);
+  };
+
+  const contextValue = {
+    previousPrompts,
+    setPreviousPrompts,
+    onSent,
+    setRecentPrompt,
+    recentPrompt,
+    showResult,
+    loading,
+    resultData,
+    input,
+    setInput,
+  };
+
+  return (
+    <Context.Provider value={contextValue}>{props.children}</Context.Provider>
+  );
+};
+
+export default ContextProvider;
+
+
+
+
+
+
+
+
+
+
+
+import {
+  GoogleGenerativeAI,
+  HarmCategory,
+  HarmBlockThreshold,
+} from "@google/geneartive-ai";
+
+const MODEL_NAME = "gemini-1.5-flash";
+const API_KEY = "AIzaSyCLnOqd1IYt2l3HJYPnmLXwDT6jyKdo9ek";
+
+async function runChat(prompt) {
+  const genAI = new GoogleGenerativeAI(API_KEY);
+  const model = genAI.getGeneratieModel({ model: MODEL_NAME });
+
+  const generationConfig = {
+    temperature: 1,
+    topP: 0.95,
+    topK: 64,
+    maxOutputTokens: 8192,
+    responseMimeType: "text/plain",
+  };
+
+  const safetySettings = [
+    {
+      category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+      threshold: HarmBlockThreshold.BLOCK_NONE,
+    },
+    {
+      category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+      threshold: HarmBlockThreshold.BLOCK_NONE,
+    },
+    {
+      category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+      threshold: HarmBlockThreshold.BLOCK_NONE,
+    },
+    {
+      category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+      threshold: HarmBlockThreshold.BLOCK_NONE,
+    },
+  ];
+
+  const chat = model.startChat({
+    generationConfig,
+    safetySettings,
+    history: [],
+  });
+
+  const result = await chat.sendMessage(prompt);
+  const response = result.response;
+  console.log(response.text());
+}
+
+export default runChat;
