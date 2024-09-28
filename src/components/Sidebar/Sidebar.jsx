@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Sidebar.css";
 import { assets } from "../../assets/assets";
 
 const Sidebar = () => {
   const [extended, setExtended] = useState(false);
+  // const { onSent, previousPromtps, setRecentPrompt } = useContext (Context)
 
   return (
     <div className="sidebar">
