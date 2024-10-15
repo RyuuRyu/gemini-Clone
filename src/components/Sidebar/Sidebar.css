@@ -5,6 +5,7 @@
   justify-content: space-between;
   background-color: #f0f4f9;
   padding: 25px 15px;
+  transition: 0.5s ease-out;
 }
 
 .sidebar img {
@@ -13,6 +14,7 @@
 
 .sidebar .menu {
   display: block;
+  position: absolute;
   margin-left: 10px;
   cursor: pointer;
 }

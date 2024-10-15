@@ -14,7 +14,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${extended ? "extended" : ""}`}>
       <div className="top">
         <img
           onClick={() => setExtended((prev) => !prev)}

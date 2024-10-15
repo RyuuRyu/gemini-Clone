@@ -52,24 +52,8 @@ async function run(input) {
   });
 
   const result = await chatSession.sendMessage(input);
-  const response = await result.response.text(); // Await the text method here
-
-  return response; // Now return the response as a string
+  const response = await result.response.text();
+  return response;
 }
-
-/* async function run(input) {
-  // Accept prompt or input as an argument
-  const chatSession = model.startChat({
-    generationConfig,
-    safetySettings,
-    history: [],
-  });
-
-  const result = await chatSession.sendMessage(input); // Use input instead of undefined prompt
-  const response = result.response;
-  console.log(response.text());
-
-  return result.response.text;
-} */
 
 export default run;
