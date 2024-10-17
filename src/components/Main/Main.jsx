@@ -12,6 +12,7 @@ const Main = () => {
     resultData,
     setInput,
     input,
+    cardOnClick,
   } = useContext(Context);
 
   return (
@@ -32,22 +33,46 @@ const Main = () => {
             </div>
 
             <div className="cards">
-              <div className="card">
+              <div
+                onClick={() =>
+                  cardOnClick(
+                    "Suggest a powerfull place to see on upcoming road trip"
+                  )
+                }
+                className="card"
+              >
                 <p>Suggest a powerfull place to see on upcoming road trip</p>
                 <img src={assets.compass_icon} alt="" />
               </div>
 
-              <div className="card">
+              <div
+                onClick={() =>
+                  cardOnClick("Briefly summarize this concept: Urban Planning")
+                }
+                className="card"
+              >
                 <p>Briefly summarize this concept: Urban Planning</p>
                 <img src={assets.bulb_icon} alt="" />
               </div>
 
-              <div className="card">
+              <div
+                onClick={() =>
+                  cardOnClick(
+                    "Brainstorm team bonding activities for our work retreat"
+                  )
+                }
+                className="card"
+              >
                 <p>Brainstorm team bonding activities for our work retreat</p>
                 <img src={assets.message_icon} alt="" />
               </div>
 
-              <div className="card">
+              <div
+                onClick={() =>
+                  cardOnClick("Improve the readibility of the following code")
+                }
+                className="card"
+              >
                 <p>Improve the readibility of the following code</p>
                 <img src={assets.code_icon} alt="" />
               </div>
@@ -77,6 +102,11 @@ const Main = () => {
         <div className="main-bottom">
           <div className="search-box">
             <input
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  onSent();
+                }
+              }}
               onChange={(e) => setInput(e.target.value)}
               value={input}
               type="text"

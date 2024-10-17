@@ -22,6 +22,14 @@ const ContextProvider = (props) => {
     setShowResult(false);
   };
 
+  const cardOnClick = (prompt) => {
+    setInput(prompt);
+    setResultData("");
+    setLoading(true);
+    setShowResult(true);
+    onSent(prompt);
+  };
+
   const onSent = async (prompt) => {
     setResultData("");
     setLoading(true);
@@ -68,6 +76,7 @@ const ContextProvider = (props) => {
     input,
     setInput,
     newChat,
+    cardOnClick,
   };
 
   return (
